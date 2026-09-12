@@ -284,8 +284,9 @@ Possible future improvements include:
 - Develop a real-time sentiment analysis interface
 - Deploy the model as a web application
 - Add explainable AI techniques for model predictions
+  
 
-📄 License
+## 📄 License
 
 This project is intended for educational and academic purposes.
 
