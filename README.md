@@ -290,8 +290,6 @@ Possible future improvements include:
 This project is intended for educational and academic purposes.
 
 
-👩‍💻 Author
-
 ## 👩‍💻 Author
 
 **Malsha Nethmini**
