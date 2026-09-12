@@ -285,14 +285,17 @@ Possible future improvements include:
 - Deploy the model as a web application
 - Add explainable AI techniques for model predictions
 
-  
-👩‍💻 Author
-
-Malsha Nethmini
-
-BSc (Hons) in Data Science
-Sabaragamuwa University of Sri Lanka
-
 📄 License
 
 This project is intended for educational and academic purposes.
+
+
+👩‍💻 Author
+
+## 👩‍💻 Author
+
+**Malsha Nethmini**
+
+🔗 **LinkedIn:** [Malsha Nethmini](https://www.linkedin.com/in/malsha-nethmini-vk/)
+
+
