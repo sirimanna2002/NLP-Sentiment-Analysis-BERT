@@ -2,6 +2,8 @@
 
 **Live dashboard:** [Open the dashboard](https://nlp-sentiment-analysis-bert-fahxl47vwczqc44iyxgizg.streamlit.app/)
 
+**Fine-tuned model:** [MalshaVK/bert-sentiment140 on Hugging Face](https://huggingface.co/MalshaVK/bert-sentiment140)
+
 Binary sentiment classification of social media posts (tweets), comparing traditional machine learning models with a fine-tuned BERT transformer.
 
 ## Results
@@ -42,6 +44,9 @@ All models use the same train/test split, so the comparison is fair.
 
 ```
 NLP-Sentiment-Analysis-BERT/
+├── app/
+│   ├── app.py
+│   └── requirements.txt
 ├── src/
 │   ├── preprocessing.py
 │   ├── train_models.py
@@ -64,10 +69,17 @@ python src/train_bert.py
 
 BERT training is slow on CPU. A GPU (for example a free Google Colab T4) is recommended.
 
-## Work in Progress
+## Dashboard Features
 
-- Interactive dashboard (Streamlit) with confusion matrix, sentiment trends and misclassified examples
+- Model comparison (accuracy, precision, recall, F1)
+- BERT confusion matrix
+- Misclassified tweet explorer
+- Live sentiment prediction with the fine-tuned BERT model
+
+## Future Work
+
 - Neutral sentiment class
+- Sentiment trends over time
 - Model explainability
 
 ## Author
