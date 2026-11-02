@@ -1,300 +1,74 @@
-# NLP Sentiment Analysis using BERT
+# NLP Sentiment Analysis: Traditional ML vs BERT
 
-An NLP-based sentiment analysis project that classifies social media posts into positive and negative sentiments using traditional machine learning models and a fine-tuned BERT transformer.
+Binary sentiment classification of social media posts (tweets), comparing traditional machine learning models with a fine-tuned BERT transformer.
 
-## 📌 Project Overview
+## Results
 
-Social media platforms generate a large amount of textual data that can provide valuable insights into public opinion and user sentiment.
+Evaluated on a held-out test set of 10,000 tweets (20% of 50,000 sampled tweets).
 
-This project explores sentiment classification of social media posts by comparing traditional machine learning approaches with a transformer-based BERT model.
+| Model               | Accuracy | Precision | Recall | F1-Score |
+|---------------------|---------:|----------:|-------:|---------:|
+| Naive Bayes         | 73.97%   | 74.78%    | 72.69% | 73.72%   |
+| Logistic Regression | 75.59%   | 74.87%    | 77.38% | 76.10%   |
+| SVM (LinearSVC)     | 74.27%   | 73.65%    | 75.95% | 74.78%   |
+| BERT                | 83.71%   | 82.65%    | 85.53% | 84.06%   |
 
-The project implements and compares:
+Precision, recall and F1 are calculated for the positive class.
 
-- Naive Bayes
-- Logistic Regression
-- Support Vector Machine (SVM)
-- Fine-tuned BERT
+**Main finding:** fine-tuned BERT outperforms the best traditional model (Logistic Regression) by about 8 points of accuracy and F1.
 
-The traditional machine learning models use TF-IDF text representations, while BERT learns contextual representations of the input text.
+## Dataset
 
----
+- Sentiment140 (tweets labelled negative or positive)
+- 50,000 randomly sampled tweets, 80/20 train/test split (`random_state=42`)
+- Downloaded automatically with `kagglehub`
 
-## 🎯 Objectives
+## Approach
 
-The main objectives of this project are to:
+**Traditional models** (Naive Bayes, Logistic Regression, SVM)
+- Text cleaning: remove URLs, mentions, hashtags, special characters, numbers; lowercase; remove stopwords; Porter stemming
+- TF-IDF features (5,000 features)
 
-- Perform text preprocessing for social media data
-- Apply NLP techniques to textual data
-- Implement traditional machine learning models for sentiment classification
-- Fine-tune a pre-trained BERT model for sentiment analysis
-- Compare the performance of different approaches
-- Evaluate model performance using classification metrics
-- Visualize and analyse the obtained results
+**BERT**
+- Pre-trained `bert-base-uncased` fine-tuned for 3 epochs
+- Light cleaning only (remove URLs and mentions); no stemming or stopword removal, because BERT works best with natural sentences
+- Max sequence length 64, batch size 32, learning rate 2e-5, AdamW optimizer
 
----
+All models use the same train/test split, so the comparison is fair.
 
-## 📊 Dataset
+## Project Structure
 
-This project uses the **Sentiment140** dataset.
-
-The dataset contains tweets labelled with sentiment information. For this project, a sample of **5,000 records** is used for model development and experimentation.
-
-### Dataset characteristics
-
-- Source: Sentiment140
-- Text data: Social media posts / tweets
-- Sentiment classes:
-  - Negative
-  - Positive
-- Sample size used in this project: 5,000 records
-
-The dataset is downloaded programmatically using `kagglehub`.
-
----
-
-## 🔄 Data Preprocessing
-
-The raw social media text is cleaned before training the models.
-
-The preprocessing pipeline includes:
-
-1. Removing URLs
-2. Removing user mentions
-3. Removing hashtags
-4. Removing special characters and numbers
-5. Converting text to lowercase
-6. Removing English stopwords
-7. Applying Porter stemming
-
-These preprocessing steps help reduce unnecessary noise from the social media text.
-
----
-
-## 🤖 Machine Learning Models
-
-### 1. Naive Bayes
-
-Multinomial Naive Bayes is used as a traditional probabilistic classification model.
-
-### 2. Logistic Regression
-
-Logistic Regression is used as a linear classification algorithm for binary sentiment classification.
-
-### 3. Support Vector Machine (SVM)
-
-A linear SVM classifier is implemented to identify the decision boundary between positive and negative sentiments.
-
-### 4. BERT
-
-A pre-trained `bert-base-uncased` model is fine-tuned for binary sentiment classification.
-
-The BERT model uses tokenized text sequences and a classification layer to predict the sentiment of each input text.
-
----
-
-## 🧠 BERT Fine-Tuning
-
-The BERT implementation uses:
-
-- Pre-trained `bert-base-uncased`
-- Hugging Face Transformers
-- PyTorch
-- BERT Tokenizer
-- Maximum sequence length: 128
-- Batch size: 16
-- Learning rate: 2e-5
-- Training epochs: 3
-
-The dataset is divided into training and testing sets using an 80/20 split.
-
-The model is trained using the AdamW optimizer.
-
----
-
-## 📈 Model Performance
-
-The project compares the performance of the traditional machine learning models with the fine-tuned BERT model.
-
-| Model | Accuracy |
-|---|---:|
-| Naive Bayes | 78% |
-| Logistic Regression | 82% |
-| SVM | 85% |
-| BERT | 92% |
-
-
-### Performance Visualization
-
-The repository includes visualizations for model performance and classification results.
-
-![Accuracy Comparison](accuracy_comparison.png)
-
-![Confusion Matrix](confusion_matrix.png)
-
----
-
-## 🛠️ Technologies Used
-
-### Programming Language
-- Python
-
-### Machine Learning & NLP
-- Scikit-learn
-- NLTK
-- Hugging Face Transformers
-- PyTorch
-
-### Data Processing
-- Pandas
-- NumPy
-
-### Visualization
-- Matplotlib
-- Seaborn
-
-### Dataset
-- Sentiment140
-- KaggleHub
-
-### Development Environment
-- Jupyter Notebook
-- Google Colab / VS Code
-
----
-
-## 📁 Project Structure
-
-```text
+```
 NLP-Sentiment-Analysis-BERT/
-│
-├── NLP_Sentiment_Analysis.ipynb
-├── preprocessing.py
-├── train_models.py
-├── train_bert.py
+├── src/
+│   ├── preprocessing.py
+│   ├── train_models.py
+│   └── train_bert.py
+├── results/
+│   ├── results_traditional.csv
+│   ├── results_bert.csv
+│   └── bert_predictions.csv
 ├── requirements.txt
-├── results.csv
-├── accuracy_comparison.png
-├── confusion_matrix.png
 └── README.md
-
 ```
 
-## ⚙️ Installation
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/sirimanna2002/NLP-Sentiment-Analysis-BERT.git
+## How to Run
 
 ```
-
-### 2. Navigate to the project directory
-
-```bash
-cd NLP-Sentiment-Analysis-BERT
-
-```
-
-### 3. Create a virtual environment
-
-```bash
-python -m venv venv
-
-```
-### Activate the environment.
-
-Windows:
-```bash
-venv\Scripts\activate
-```
-macOS / Linux:
-```bash
-source venv/bin/activate
-```
-
-### 4. Install dependencies
-
-```bash
-
 pip install -r requirements.txt
-
+python src/train_models.py
+python src/train_bert.py
 ```
 
-## ▶️ Running the Project
+BERT training is slow on CPU. A GPU (for example a free Google Colab T4) is recommended.
 
-Run Traditional Machine Learning Models
+## Work in Progress
 
-```bash
-python train_models.py
+- Interactive dashboard (Streamlit) with confusion matrix, sentiment trends and misclassified examples
+- Neutral sentiment class
+- Model explainability
 
-```
-
-This trains and evaluates:
-
-- Naive Bayes
-- Logistic Regression
-- SVM
-
-
-### Run BERT
-
-```bash
-python train_bert.py
-
-```
-
-The BERT model will download the required pre-trained model and perform fine-tuning on the dataset.
-
-## 📓 Jupyter Notebook
-
-The complete experimental workflow is also available in:
-
-```bash
-NLP_Sentiment_Analysis.ipynb
-
-```
-
-The notebook contains the data analysis, preprocessing, model development and evaluation workflow.
-
-## 🔍 Key Learning Outcomes
-
-Through this project, I gained practical experience in:
-
-- Natural Language Processing
-- Text preprocessing
-- TF-IDF vectorization
-- Traditional machine learning classification
-- Transformer-based NLP
-- BERT fine-tuning
-- Tokenization
-- Model evaluation
-- Sentiment classification
-- Comparing traditional ML models with transformer models
-
-  
-## 🚀 Future Improvements
-
-Possible future improvements include:
-
-- Increase the training dataset size
-- Perform hyperparameter tuning
-- Add precision, recall and F1-score comparisons
-- Implement cross-validation
-- Add multilingual sentiment analysis
-- Develop a real-time sentiment analysis interface
-- Deploy the model as a web application
-- Add explainable AI techniques for model predictions
-  
-
-## 📄 License
-
-This project is intended for educational and academic purposes.
-
-
-## 👩‍💻 Author
+## Author
 
 **Malsha Nethmini**
-
-🔗 **LinkedIn:** [Malsha Nethmini](https://www.linkedin.com/in/malsha-nethmini-vk/)
-
-
+[LinkedIn](https://www.linkedin.com/in/malsha-nethmini-vk/)
