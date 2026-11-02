@@ -1,5 +1,7 @@
 # NLP Sentiment Analysis: Traditional ML vs BERT
 
+**Live dashboard:** [Open the dashboard](https://nlp-sentiment-analysis-bert-fahxl47vwczqc44iyxgizg.streamlit.app/)
+
 Binary sentiment classification of social media posts (tweets), comparing traditional machine learning models with a fine-tuned BERT transformer.
 
 ## Results
