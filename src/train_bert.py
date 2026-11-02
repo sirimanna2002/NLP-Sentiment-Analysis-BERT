@@ -79,6 +79,8 @@ def train_bert():
     """
     BERT Model Train
     """
+    torch.manual_seed(42)
+
     # Data Load
     df = load_data()
 
@@ -171,6 +173,10 @@ def train_bert():
         'predicted': predictions,
     })
     pred_df.to_csv('results/bert_predictions.csv', index=False)
+
+    # Save the trained model so the dashboard can use it
+    model.save_pretrained('bert_sentiment_model')
+    tokenizer.save_pretrained('bert_sentiment_model')
 
     return metrics
 

@@ -13,11 +13,11 @@ Evaluated on a held-out test set of 10,000 tweets (20% of 50,000 sampled tweets)
 | Naive Bayes         | 73.97%   | 74.78%    | 72.69% | 73.72%   |
 | Logistic Regression | 75.59%   | 74.87%    | 77.38% | 76.10%   |
 | SVM (LinearSVC)     | 74.27%   | 73.65%    | 75.95% | 74.78%   |
-| BERT                | 83.71%   | 82.65%    | 85.53% | 84.06%   |
+| BERT                | 83.11%   | 81.03%    | 86.66% | 83.75%   |
 
 Precision, recall and F1 are calculated for the positive class.
 
-**Main finding:** fine-tuned BERT outperforms the best traditional model (Logistic Regression) by about 8 points of accuracy and F1.
+**Main finding:** fine-tuned BERT outperforms the best traditional model (Logistic Regression) by about 7 to 8 points of accuracy and F1.
 
 ## Dataset
 

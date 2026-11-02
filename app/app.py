@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -82,3 +83,61 @@ st.dataframe(
     wrong[["text", "Actual", "Predicted"]].head(50),
     width="stretch",
 )
+
+
+# ---------- Section 4: live prediction ----------
+st.header("4. Try it yourself (live BERT prediction)")
+
+MODEL_ID = "MalshaVK/bert-sentiment140"
+
+
+@st.cache_resource
+def load_model():
+    from transformers import AutoModelForSequenceClassification, AutoTokenizer
+
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_ID)
+    model = AutoModelForSequenceClassification.from_pretrained(MODEL_ID)
+    model.eval()
+    return tokenizer, model
+
+
+def light_clean(text):
+    # Same cleaning that was used when training BERT
+    text = re.sub(r"http\S+|www\.\S+", "", text)
+    text = re.sub(r"@\w+", "", text)
+    return text.strip()
+
+
+user_text = st.text_area(
+    "Type a tweet or sentence (English):",
+    "I love this phone, the battery is amazing!",
+)
+
+if st.button("Predict sentiment"):
+    import torch
+
+    with st.spinner("Loading BERT (the first time takes about a minute)..."):
+        tokenizer, model = load_model()
+
+    enc = tokenizer(
+        light_clean(user_text),
+        truncation=True,
+        padding="max_length",
+        max_length=64,
+        return_tensors="pt",
+    )
+    with torch.no_grad():
+        logits = model(
+            input_ids=enc["input_ids"],
+            attention_mask=enc["attention_mask"],
+        ).logits
+    probs = torch.softmax(logits, dim=1)[0]
+
+    confidence = float(probs.max())
+    label = LABELS[int(probs.argmax())]
+    if confidence < 0.65:
+        label = "Uncertain (could be neutral)"
+
+    st.subheader(f"Prediction: {label}")
+    st.write(f"Confidence: {confidence:.1%}")
+    st.progress(float(probs[1]), text=f"Positive probability: {float(probs[1]):.1%}")
